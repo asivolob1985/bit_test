@@ -1,10 +1,12 @@
 <?php
 
-abstract class Controller {
+abstract class Controller
+{
 	public $model;
 	public $view;
 
-	function __construct() {
+	public function __construct()
+	{
 		$this->view = new View();
 	}
 

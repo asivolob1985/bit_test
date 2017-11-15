@@ -1,6 +1,7 @@
 <?php
 
-class Model_User extends Db {
+class Model_User extends Db
+{
 
 	/**
 	 * метод авторизует пользователя
@@ -10,7 +11,8 @@ class Model_User extends Db {
 	 *
 	 * @return bool|mixed
 	 */
-	public function auth($login, $pass) {
+	public function auth($login, $pass)
+	{
 		$user = false;
 		if ($login != '' && $pass != '') {
 			$pass = md5(md5($pass));
@@ -38,11 +40,12 @@ class Model_User extends Db {
 	 * Списание денег у клиента
 	 * @return bool
 	 */
-	public function withdraw() {
+	public function withdraw()
+	{
 		$id = $_COOKIE['id'];
 		$balance = $this->getBalanceById($id);
 		log::write('withdraw', 'transaction_start.user_id='.$id.', balance='.$balance);
-		if($balance > 0){
+		if ($balance > 0) {
 			try {
 				$this->_pdo->beginTransaction();
 				$this->_pdo->exec("UPDATE users SET balance = 0 where id = $id");
@@ -55,7 +58,7 @@ class Model_User extends Db {
 				log::write('withdraw', $e->getMessage());
 				return false;
 			}
-		}else{
+		} else {
 			log::write('withdraw', 'transaction_stop.user_id='.$id.', недостаточно средств');
 		}
 		//
@@ -67,7 +70,8 @@ class Model_User extends Db {
 	 *
 	 * @return bool
 	 */
-	public function is_auth() {
+	public function is_auth()
+	{
 		if (isset($_COOKIE['id']) and isset($_COOKIE['hash'])) {
 			$sql = $this->_pdo->prepare("SELECT id, login, balance FROM users WHERE id = ? and hash = ? LIMIT 1");
 			if ($sql->execute(array($_COOKIE['id'], $_COOKIE['hash']))) {
@@ -88,7 +92,8 @@ class Model_User extends Db {
 	 *
 	 * @return string
 	 */
-	private function generateCode($length = 6) {
+	private function generateCode($length = 6)
+	{
 		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRQSTUVWXYZ0123456789";
 		$code = "";
 		$clen = strlen($chars) - 1;
@@ -105,7 +110,8 @@ class Model_User extends Db {
 	 *
 	 * @return bool
 	 */
-	private function getBalanceById($id){
+	private function getBalanceById($id)
+	{
 		$sql = $this->_pdo->prepare("SELECT balance FROM users WHERE id = ?");
 		if ($sql->execute(array($id))) {
 			$user = $sql->fetch();

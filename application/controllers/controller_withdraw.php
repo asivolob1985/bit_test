@@ -1,6 +1,7 @@
 <?php
 
-class Controller_Withdraw extends Controller {
+class Controller_Withdraw extends Controller
+{
 
 	public function action_index() {
 		$model_user = new Model_User();

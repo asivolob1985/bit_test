@@ -1,7 +1,7 @@
 <?php
 
-class Config {
-
+class Config
+{
 	static $HOST = "localhost"; // Хост обычно localhost
 	static $USER = "root"; // Пользователь баз данных
 	static $PASS = ""; // Пароль

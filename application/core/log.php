@@ -1,8 +1,10 @@
 <?php
 
-class log{
+class log
+{
 
-	public static function write($file, $text){
+	public static function write($file, $text)
+	{
 		$path = ROOT.'/application/logs/';
 		$dateteme = date('d.m.Y / H:i:s');
 		$full_path = $path.$file.'.php';

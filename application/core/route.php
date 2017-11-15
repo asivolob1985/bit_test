@@ -1,8 +1,10 @@
 <?php
 
-class Route {
+class Route
+{
 
-	static function start() {
+	public static function start()
+	{
 		// контроллер и действие по умолчанию
 		$controller_name = 'Main';
 		$action_name = 'index';
