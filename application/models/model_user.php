@@ -41,15 +41,17 @@ class Model_User extends Model
 	 * Списание денег у клиента
 	 * @return bool
 	 */
-	public function withdraw()
+	public function withdraw($amount=0)
 	{
 		$id = $_COOKIE['id'];
 		$balance = $this->getBalanceById($id);
 		log::write('withdraw', 'transaction_start.user_id='.$id.', balance='.$balance);
-		if ($balance > 0) {
+		log::write('withdraw', 'amount='.$amount);
+		if ($balance > 0 and $amount <= $balance and $amount > 0) {
 			try {
 				$this->_pdo->beginTransaction();
-				$this->_pdo->exec("UPDATE users SET balance = 0 where id = $id");
+				$sql = $this->_pdo->prepare("UPDATE users SET balance = balance - ? where id = ?");
+				$sql->execute(array($amount, $id));
 				$this->_pdo->commit();
 				log::write('withdraw', 'transaction_commit.user_id='.$id);
 				return true;
@@ -60,7 +62,7 @@ class Model_User extends Model
 				return false;
 			}
 		} else {
-			log::write('withdraw', 'transaction_stop.user_id='.$id.', недостаточно средств');
+			log::write('withdraw', 'transaction_stop.user_id='.$id.', недостаточно средств для списания');
 		}
 		//
 		return false;
