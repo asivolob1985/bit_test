@@ -45,24 +45,27 @@ class Model_User extends Model
 	{
 		$id = $_COOKIE['id'];
 		$balance = $this->getBalanceById($id);
-		log::write('withdraw', 'transaction_start.user_id='.$id.', balance='.$balance);
-		log::write('withdraw', 'amount='.$amount);
+
+		$logger = new \Liberta\MLogger\Logger(LOGS_PATH);
+		$logger->info('withdraw', ['transaction_start.user_id='.$id.', balance='.$balance]);
+		$logger->info('withdraw', ['amount='.$amount]);
+
 		if ($balance > 0 and $amount <= $balance and $amount > 0) {
 			try {
 				$this->_pdo->beginTransaction();
 				$sql = $this->_pdo->prepare("UPDATE users SET balance = balance - ? where id = ?");
 				$sql->execute(array($amount, $id));
 				$this->_pdo->commit();
-				log::write('withdraw', 'transaction_commit.user_id='.$id);
+				$logger->info('withdraw', ['transaction_commit.user_id='.$id]);
 				return true;
 			} catch (Exception $e) {
 				$this->_pdo->rollBack();
-				log::write('withdraw', 'transaction_rollback.user_id='.$id);
-				log::write('withdraw', $e->getMessage());
+				$logger->error('withdraw', ['transaction_rollback.user_id='.$id]);
+				$logger->error('withdraw', [$e->getMessage()]);
 				return false;
 			}
 		} else {
-			log::write('withdraw', 'transaction_stop.user_id='.$id.', недостаточно средств для списания');
+			$logger->error('withdraw', ['transaction_stop.user_id='.$id.', недостаточно средств для списания']);
 		}
 		//
 		return false;

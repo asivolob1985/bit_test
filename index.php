@@ -4,4 +4,5 @@ session_write_close();
 ini_set('display_errors', 1);
 
 # Подключаем bootstrap файл
+require_once 'vendor/autoload.php';
 require_once 'application/bootstrap.php';

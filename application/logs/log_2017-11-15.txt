@@ -1,0 +1,6 @@
+[2017-11-15 13:25:29.234276] [INFO] withdraw
+    0: 'transaction_start.user_id=1, balance=1000.00'
+[2017-11-15 13:25:29.234276] [INFO] withdraw
+    0: 'amount=1000.00'
+[2017-11-15 13:25:29.235275] [INFO] withdraw
+    0: 'transaction_commit.user_id=1'
