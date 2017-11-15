@@ -7,6 +7,7 @@ class Controller_Auth extends Controller
 	public function action_index()
 	{
 		$model_user = new Model_User();
+
 		$user = $model_user->is_auth();
 		if ($user) {
 			$this->view->generate('login.php', 'template_view.php',
@@ -18,7 +19,6 @@ class Controller_Auth extends Controller
 		} else {
 			$login = isset($_POST['login']) ? $_POST['login'] : '';
 			$pass = isset($_POST['pass']) ? $_POST['pass'] : '';
-			$model_user = new Model_User();
 			$auth = $model_user->auth($login, $pass);
 			if ($auth) {
 				$this->view->generate('login.php', 'template_view.php',
