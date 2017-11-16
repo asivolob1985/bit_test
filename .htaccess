@@ -1,3 +1,11 @@
+# Protect hidden files from being viewed
+<Files .*>
+	Order Deny,Allow
+	Deny From All
+</Files>
+
+
+
 AddDefaultCharset UTF-8
 
 # Запрет на просмотр листинга папкок

@@ -1,0 +1,4 @@
+[2017-11-16 14:41:01.621931] [INFO] withdraw
+    0: 'transaction_commit.user_id=1'
+[2017-11-16 14:41:04.279083] [ERROR] withdraw
+    0: 'transaction_stop.user_id=1, ошибка - нулевой баланс'

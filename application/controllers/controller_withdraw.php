@@ -10,8 +10,7 @@ class Controller_Withdraw extends Controller
 		$is_auth = $model_user->is_auth();
 		if ($is_auth) {
 			//пользователь авторизован, начинаем списание денег
-			$amount = $is_auth['balance'];
-			if ($model_user->withdraw($amount)) {
+			if ($model_user->withdraw()) {
 				$this->view->generate('withdraw.php', 'template_view.php',
 					array(
 						'title' => 'Списание средств проведено успешно',
